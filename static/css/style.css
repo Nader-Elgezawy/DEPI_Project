@@ -1,0 +1,54 @@
+/* Forensics Dashboard — custom styles */
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Tool cards */
+.tool-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Log output area */
+.log-output {
+  background: #0d1117;
+  color: #c9d1d9;
+  font-family: "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  padding: 1rem;
+  max-height: 520px;
+  min-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: none;
+  border-radius: 0;
+}
+
+/* Badge tweaks */
+.badge {
+  font-weight: 500;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+}
+
+/* Footer */
+footer {
+  font-size: 0.85rem;
+}

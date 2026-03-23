@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Forensics Dashboard — Home{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col">
+    <h2><i class="bi bi-speedometer2 me-2"></i>Dashboard</h2>
+    <p class="text-secondary">
+      Select an analysis tool below. Each card shows prerequisite status —
+      green means the required programs are installed.
+    </p>
+  </div>
+</div>
+
+{% if not tools %}
+<div class="alert alert-info">
+  No analysis tools found. Drop Python modules into the <code>tools/</code>
+  directory and restart the dashboard.
+</div>
+{% endif %}
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+  {% for tool in tools %}
+  <div class="col">
+    <div class="card h-100 shadow-sm tool-card">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">
+          <i class="bi bi-tools me-1 text-primary"></i>{{ tool.name }}
+        </h5>
+        <p class="card-text text-secondary flex-grow-1">{{ tool.description }}</p>
+
+        <!-- Prerequisites -->
+        <div class="mb-3">
+          <small class="text-uppercase fw-bold text-secondary">Prerequisites</small>
+          <ul class="list-unstyled mb-0 mt-1">
+            {% for p in tool.prerequisites %}
+            <li>
+              {% if p.installed %}
+                <i class="bi bi-check-circle-fill text-success"></i>
+              {% else %}
+                <i class="bi bi-x-circle-fill text-danger"></i>
+              {% endif %}
+              <code>{{ p.program }}</code>
+            </li>
+            {% endfor %}
+            {% if not tool.prerequisites %}
+            <li class="text-secondary"><em>No external prerequisites</em></li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Accepted extensions -->
+        {% if tool.accepted_extensions %}
+        <div class="mb-3">
+          <small class="text-uppercase fw-bold text-secondary">Accepted files</small><br>
+          {% for ext in tool.accepted_extensions %}
+            <span class="badge bg-secondary">{{ ext }}</span>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="mb-3">
+          <small class="text-uppercase fw-bold text-secondary">Accepted files</small><br>
+          <span class="badge bg-info">Any file type</span>
+        </div>
+        {% endif %}
+
+        <a href="{{ url_for('tool_page', tool_id=tool.tool_id) }}"
+           class="btn btn-primary mt-auto">
+          <i class="bi bi-play-circle me-1"></i>Open Tool
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
